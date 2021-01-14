@@ -11,3 +11,5 @@ const FavoriteScreen = () => {
         </SafeAreaView>
     );
 }
+
+export default FavoriteScreen;
