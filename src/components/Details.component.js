@@ -1,10 +1,13 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native';
-import {Layout, Text, Divider, TopNavigation, TopNavigationAction } from '@ui-kitten/components';
+import { SafeAreaView, StyleSheet,  StatusBar } from 'react-native';
+import {Layout, Text, Divider, TopNavigation, TopNavigationAction, Button } from '@ui-kitten/components';
 
-import {BackIcon} from '../module/Icons.js';
+import {FavoriteIcon, FavoriteIconOutline,  BackIcon} from '../module/Icons.js';
+import { connect } from 'react-redux';
 
-const DetailsScreen = ({navigation}) => {
+const DetailsScreen = ({navigation, route, dispatch, favorites}) => {
+
+    const { idItem } = route.params;
 
     const navigateBack = () => {
         navigation.goBack();
@@ -13,16 +16,45 @@ const DetailsScreen = ({navigation}) => {
     const BackAction = () => (
         <TopNavigationAction icon={BackIcon} onPress={navigateBack}/>
     );
-
+        
+    const toggleFavorite= (itemId) => {
+        const action = { type: "TOGGLE_FAVORITE", value: itemId }
+        dispatch(action);
+    }
+    
     return(
-        <SafeAreaView>
+        <SafeAreaView style={style.container}>
             <TopNavigation title='Details' alignment='center' accessoryLeft={BackAction}/>
             <Divider/>
-            <Layout>
-                <Text category="h1"> Details screen </ Text>
+            <Layout style={{flex: 1, justifyContent:"center", alignItems:"center"}}>
+                <Text category="h2">{idItem.title}</Text>
+                <Text category="h5">{idItem.description}</Text>
+                {
+                    favorites.findIndex(item => item.title === idItem.title) !== -1 ?
+                    (
+                        <Button appearance="ghost" status='primary' accessoryLeft={FavoriteIcon} onPress={()=>toggleFavorite(idItem)}/>
+                    ):
+                    (
+                        <Button appearance="ghost" status='basic' accessoryLeft={FavoriteIconOutline} onPress={()=>toggleFavorite(idItem)}/>
+                    )
+                }
+               
+
             </Layout>
         </SafeAreaView>
     );
 }
 
-export default DetailsScreen;
+const mapStateToProps = (state) => {
+    return {
+        favorites: state.favorites
+    }
+}
+export default connect(mapStateToProps)(DetailsScreen);
+
+const style = StyleSheet.create({
+    container: {
+        flex: 1,
+        paddingTop: StatusBar.currentHeight
+    }
+})

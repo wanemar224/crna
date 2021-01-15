@@ -11,3 +11,9 @@ export const HomeIcon = (props) => (
 export const FavoriteIcon = (props) => (
   <Icon {...props} name='star' />
 );
+export const FavoriteIconOutline = (props) => (
+  <Icon {...props} name='star-outline' />
+);
+export const SearchIcon = (props) => (
+  <Icon {...props} name='search' />
+);

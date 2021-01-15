@@ -1,15 +1,49 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native';
-import {Layout, Text } from '@ui-kitten/components';
+import { SafeAreaView, StyleSheet, StatusBar} from 'react-native';
+import {Divider, Layout, List, TopNavigation } from '@ui-kitten/components';
 
-const FavoriteScreen = () => {
+import { connect } from 'react-redux';
+import CustomListItem from './CustomListItem.component.js';
+
+const FavoriteScreen = ({favorites, navigation}) => {
+
     return (
-        <SafeAreaView>
-            <Layout>
-                <Text>Favorite screen</Text>
+        <SafeAreaView style={style.container}>
+            <TopNavigation title='Mes favoris' alignment='center' />
+            <Divider></Divider>
+            <Layout style={{flex: 1}}>
+            <List
+                data={favorites}
+                    // onEndReachedThreshold = {0.5}
+                     //onEndReached = {} //excute la fonction passer une fois à 0.5 de la fin de la liste
+         
+                     //refreshing = {true}
+                     //onRefresh = {} //actualise la liste si refreshing est true
+                extraData = {favorites}
+                renderItem={({item, index})=>(
+                    <CustomListItem item={item} index={index} navigation={navigation} 
+                                    isFavorite={(
+                                        favorites.findIndex(i => i.title === item.title) !== -1
+                                    )? true : false}
+                    />
+                )}
+            />
             </Layout>
         </SafeAreaView>
     );
 }
 
-export default FavoriteScreen;
+const mapStateToProps = (state) => {
+    return {
+        favorites: state.favorites
+      }
+}
+
+export default connect(mapStateToProps)(FavoriteScreen);
+
+const style = StyleSheet.create({
+    container: {
+        flex: 1,
+        paddingTop: StatusBar.currentHeight
+    }
+})
