@@ -6,7 +6,7 @@ export const BackIcon = (props) => (
 );
 
 export const HomeIcon = (props) => (
-  <Icon {...props} name='home' />
+  <Icon {...props} name='people' />
 );
 export const FavoriteIcon = (props) => (
   <Icon {...props} name='star' />

@@ -1,11 +1,11 @@
 const initialState = { favorites: [] }
 
 const toggleFavorite = (state = initialState, action) => {
-    let nextState;
+  let nextState;
+  //console.log(action.value);
     switch (action.type) {
-
       case 'TOGGLE_FAVORITE':
-        const favoriteIndex = state.favorites.findIndex(item => item.title=== action.value.title)
+        const favoriteIndex = state.favorites.findIndex(elem=> elem.id === action.value.id)
         if (favoriteIndex !== -1) {
           // L'item est déjà dans les favoris, on le supprime de la liste
           nextState = {

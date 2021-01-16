@@ -11,21 +11,13 @@ import { AppNavigator } from './src/navigation/Navigation.component.js';
 import { default as theme } from './my-theme.json';
 
 export default function App() {
-  const renderLoading = () => {
-    return (
-        <Layout>                
-            <Spinner size='large' />
-        </Layout>        
-    );    
-  };
-
   return (
     
     <Provider store= { store }>
-      <PersistGate loading={renderLoading} persistor={persistor}/>
+      <PersistGate  persistor={persistor}/>
       <IconRegistry icons={EvaIconsPack}/>
-      <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
-          <AppNavigator/>
+      <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}> 
+          <AppNavigator/> 
       </ApplicationProvider>
     </Provider>
    

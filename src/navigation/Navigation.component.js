@@ -24,14 +24,14 @@ const BottomTabBar = ({ navigation, state }) => (
     selectedIndex={state.index}
     onSelect={index => navigation.navigate(state.routeNames[index])}>
     <BottomNavigationTab title='Accueil' icon={HomeIcon}/>
-    <BottomNavigationTab title='Mes favories' icon={FavoriteIcon}/>
+    <BottomNavigationTab title='Mes Suivis' icon={FavoriteIcon}/>
   </BottomNavigation>
 );
 
 const TabNavigator = () => (
   <Navigator tabBar={props => <BottomTabBar {...props} />}>
-    <Screen name='Accueil' component={HomeNavigator}/>
-    <Screen name='Mes favories' component={FavoriteScreen}/>
+    <Screen name='Stars' component={HomeNavigator}/>
+    <Screen name='Mes Suivis' component={FavoriteScreen}/>
   </Navigator>
 );
 

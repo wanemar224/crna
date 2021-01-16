@@ -1,11 +1,13 @@
-import React,{useReducer} from 'react';
+import React from 'react';
+import { Image } from 'react-native';
 import { Button, Icon, ListItem } from '@ui-kitten/components';
 
 import { FavoriteIconOutline, FavoriteIcon } from '../module/Icons.js';
-import { connect } from 'react-redux';
+import { getImagePeople } from '../api/RequestsApi.js';
 
 
-const CustomListItem = ({item, index , navigation, isFavorite}) => {
+
+const CustomListItem = ({item , navigation, isFavorite}) => {
 
     const renderItemAccessory = (item) => (
         isFavorite ? 
@@ -14,21 +16,21 @@ const CustomListItem = ({item, index , navigation, isFavorite}) => {
             <Button appearance='ghost'  status='basic' accessoryLeft={FavoriteIconOutline} onPress={()=>getIdItem(item)} />
     );
 
-    const renderItemIcon = (props) => (
-        <Icon {...props} name='person'/>
+    const imgPeople = (link) => (
+        <Image source={{ uri: getImagePeople(link) }}/>
     );
     
     const getIdItem = (idItem) => {
-        navigation.navigate("Details", { idItem: idItem })
+        navigation.navigate("Details", { idPeople: idItem })
     }
     
     return (
         <ListItem
-          title={`${item.title} ${index + 1}`}
-          description={`${item.description} ${index + 1}`}
-          accessoryLeft={renderItemIcon}
-          accessoryRight={()=>renderItemAccessory(item)}
-          onPress = {()=> getIdItem(item)}
+          title={`${item.name} - pour id :${item.id}`}
+          description={`${item.known_for_department}`}
+          accessoryLeft={()=>imgPeople(item.profile_path)}
+          accessoryRight={()=>renderItemAccessory(item.id)}
+          onPress = {()=> getIdItem(item.id)}
         />
     );
 }

@@ -1,16 +1,23 @@
-const API_KEY = '';
+const API_KEY = '3d59a07aa2f19388cbbca00b58ad6fd5';
 
-const getData = async (titre) =>{
-    return await _doRequest(titre);
+
+export const getPopularPeopleByName = async (nom) =>{
+    const request = `https://api.themoviedb.org/3/search/person?api_key=${API_KEY}&language=fr&query=${nom}`;
+    return await _doRequest(request);
+
 }
 
-const rquestGetDataByID = async (id) => {
-    return await _doRequest(id);
+export const getPopublarPeopleByID = async (id) => {
+    const request = `https://api.themoviedb.org/3/person/${id}?api_key=${API_KEY}&language=fr`;
+    return await _doRequest(request);
+}
+export const getImagePeople = (img) => {
+    return `https://image.tmdb.org/t/p/w500${img}`;
 }
 
 
-const _doRequest = async (params) => {
-    const request = `http://api/${API_KEY}&${params}`;
+const _doRequest = async (request) => {
+    
     const response = await fetch(request).catch((error)=>{
         return error;
     });
